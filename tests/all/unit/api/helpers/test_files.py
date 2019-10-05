@@ -16,29 +16,27 @@ class TestFilesMethods(unittest.TestCase):
 
         with patch('app.api.helpers.files.get_settings') as get_settings:
             get_settings.return_value = {}
-            self.assertEqual('verify?token=hi',
-                             make_frontend_url('/verify', {'token': 'hi'}))
+            assert 'verify?token=hi' == make_frontend_url('/verify', {'token': 'hi'}))
 
             patch_settings(get_settings, 'https://next.eventyay.com/')
-            self.assertEqual('https://next.eventyay.com/verify?token=ok_this_is_a_secret',
+            assert 'https://next.eventyay.com/verify?token=ok_this_is_a_secret' ==
                              make_frontend_url('/verify', {'token': 'ok_this_is_a_secret'}))
 
-            self.assertEqual('https://next.eventyay.com/verify?token=ok_this_is_a_secret',
-                             make_frontend_url('/verify', {'token': 'ok_this_is_a_secret'}))
+            assert 'https://next.eventyay.com/verify?token=ok_this_is_a_secret' ==
+                         make_frontend_url('/verify', {'token': 'ok_this_is_a_secret'}))
 
-            self.assertEqual('https://next.eventyay.com/verify',
-                             make_frontend_url('/verify'))
+            assert 'https://next.eventyay.com/verify' == make_frontend_url('/verify'))
 
             patch_settings(get_settings, 'https://next.eventyay.com')
-            self.assertEqual('https://next.eventyay.com/verify?token=ok_this_is_a_secret',
+            assert 'https://next.eventyay.com/verify?token=ok_this_is_a_secret' ==
                              make_frontend_url('verify', {'token': 'ok_this_is_a_secret'}))
 
             patch_settings(get_settings, 'https://fossasia.github.io/open-event-frontend/')
-            self.assertEqual('https://fossasia.github.io/open-event-frontend/verify?token=ok_this_is_a_secret',
-                             make_frontend_url('/verify', {'token': 'ok_this_is_a_secret'}))
+            assert 'https://fossasia.github.io/open-event-frontend/verify?token=ok_this_is_a_secret' ==
+                         make_frontend_url('/verify', {'token': 'ok_this_is_a_secret'}))
 
             patch_settings(get_settings, 'https://fossasia.github.io/open-event-frontend')
-            self.assertEqual('https://fossasia.github.io/open-event-frontend/verify?token=ok_this_is_a_secret',
+            assert 'https://fossasia.github.io/open-event-frontend/verify?token=ok_this_is_a_secret' ==
                              make_frontend_url('/verify', {'token': 'ok_this_is_a_secret'}))
 
 
